@@ -6,8 +6,8 @@ copyright: >
 license: >
   This work is licensed under a
   <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://pioneers.berkeley.edu" # the base hostname & protocol for your site
+baseurl: "website" # the subpath of your site, e.g. /blog/
+url: "http://scottnumamoto.com" # the base hostname & protocol for your site
 twitter_username: PieRobotics
 github_username: pioneers
 facebook_username: pierobotics
