@@ -16,5 +16,7 @@ youtube_username: pierobotics
 instagram_username: pierobotics
 host: 0.0.0.0
 
+exclude: [vendor]
+
 # Build settings
 markdown: kramdown
