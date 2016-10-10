@@ -1,4 +1,8 @@
-source "https://rubygems.org"
 
-gem "jekyll"
-gem "html-proofer"
+source 'https://rubygems.org'
+
+gem 'jekyll'
+gem 'github-pages'
+gem 'jekyll-redirect-from'
+gem 'html-proofer'
+~
