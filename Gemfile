@@ -5,4 +5,3 @@ gem 'jekyll'
 gem 'github-pages'
 gem 'jekyll-redirect-from'
 gem 'html-proofer'
-~
