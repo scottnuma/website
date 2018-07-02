@@ -1,17 +1,23 @@
 language: ruby
 rvm:
-  - 2.5.1
-
-script: 
-  - bundle exec jekyll build
-# If we want to check our website too, uncomment the line below
-# - ./script/htmlproofer.sh
-
+- 2.5.1
+sudo: required
+services:
+- docker
+before-script:
+- IMAGE_NAME=numascott/pie-website:$(git log -1 --pretty=%H)
+- echo $IMAGE_NAME
+- docker build -t $IMAGE_NAME .
+script:
+- docker run --rm -d --name pie-website-instance -p 4000:4000 $IMAGE_NAME
+- docker ps -a
+- curl localhost:4000
+after_success:
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker push $IMAGE_NAME
+after_script:
+- docker stop pie-website-instance
 env:
   global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
-
-sudo: false # route your build to the container-based infrastructure for a faster build
-
-cache: bundler # caching bundler gem packages will speed up build
-
+  - secure: Ec0ZlIUhcuD9Rspd3YVUp0fh3PI4C2IVroV0cXCXXMCySL0Q+7x6AWPRWH4nNIc5HMuMNz6nO6jQRduk6OAEHWomWc7xBXZC8eNpze9ayN6K2kL6Bz6Ui6jz/vNG+kqTBS/p4+tHPQ6XisP0vl1+J6bd4AO3A+ExPmRIh+VUxeCG80qRfhaCTGzEzQNolJN+8X2b7DmevmSiXY5K5IrlUjkxg1F8AIQ7IQLAlF5uyklFYCHFXNT+MP7ffQSBJn2Uu4bpT9aZ7SpAcw4QOGkaibn1GK8mqdoOIfL0n0VyiL5nQMe3JnOHOK8Q6C9FMIUDGQzdt7ePH8O43innHEydYvmL2ltAE4W7P8gQkVn1Ipx288iYHqExICWF02pxKxrd3ThFFvBocrYYdLMPrFasbEwc0AWwRl2aFBEn0kqGe8i5D2yOmA1gfhEsUp8vS0qcmzwz1atcTPRPIZESZhyE/pyJP55zYaiauVdH1VmIln5tpi1OSw4oUVGhv5aCjRfPZ0szu+bh2p9+Ckl8tka3qw/WWxAj3lwio5gMNh9smDRJSfz+C8auCfhFhP7Vk2RDlESJuHxh8nfY/8ABv5z1eJVmByGX++HS/Fif0hiVUtJ/OPp5V9bI0HKrPbZ4B0GallgJXQYCgyf+DuZ41pB7R0sZbcS/Y8AWyGkoykpVG+E=
+  - secure: hivZvyrbJdOgxfCMz4GxIV0rxJjzJnAK+NyYqwtMcMb8lrOjNb4wToxXfOeCRHefVyHN8A4pQMSLe3BHxfnP32Z1+2fPzjGjb3qDzqXdkxyV4YpiOHbFhMpbH59SCFQTc0M+JB82b2nOv2tr5sxT3svj0lIKbjF9lJqsH67sFIPXBvU/yXFiW4USSaYLrr2tOsNLcZUvm0vtrho1kmOdz5S0BwDlgR+C+Q/7GzfO23vczdSRre+6MoY86V4FPaCo4Obw3TeQ0I0t0DPBc7kLqyWrhSRAoR54p+4/7jQbCcimHVIfDiSWHLZaKah2jocOiHopqva2oqgBrfe5b69gLH2uBok+8FqURIhBbPlqisl4HYjfwwkTHUPQUocVePDjkakTk8M9DxpsOzPbpTnjxAd5dEQv7s0NOzpVYtJyx4SDO6jxdXEQCfqHUd8/V4iNdTdg+TL2K4hCbX0F1SBYOhycI1Fy0rTim6/OQmTWa0UN0ksJcmmVRFGmAtmCFdUXZwJ7p+fPknqdn8WozXIF5Jh69GzMTj79mHnLRy+qZIXsG8HZwnvERIxQwo+agOQ47ev08uZDSqCsZWcnfO8i3gVMeDOHN6pfxsC9gV/UbE7kbA7V/LfJ6parsp8dUG0csDqp2a+Mis1Z31ZIl3GootzT221wGGvb/0itwEu6dqg=
