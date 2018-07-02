@@ -17,6 +17,8 @@ RUN bundle install
 RUN bundle exec jekyll build
 
 # Expose port 4000, the port Jekyll exposes by default
+# This line is necessary for Dokku to know what port to be paying attention to
+# http://dokku.viewdocs.io/dokku/networking/port-management/
 EXPOSE 4000
 
 # Serve the website when we run the image
