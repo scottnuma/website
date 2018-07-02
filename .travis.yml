@@ -4,7 +4,7 @@ rvm:
 sudo: required
 services:
 - docker
-before-script:
+before_script:
 - IMAGE_NAME=numascott/pie-website:$(git log -1 --pretty=%H)
 - echo $IMAGE_NAME
 - docker build -t $IMAGE_NAME .
